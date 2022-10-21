@@ -20,11 +20,11 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <p>
+        <p className="text-3xl">
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
-      <p className="read-the-docs">
+      <p className=" flex justify-end font-bold underline p-2 read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
     </div>
