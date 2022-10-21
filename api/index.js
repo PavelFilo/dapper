@@ -1,11 +1,38 @@
+require('dotenv').config()
 const express = require('express')
+const { generateSignificantPoints } = require('./services/map')
+const { getRouting } = require('./services/routing')
+const { loadWeatherForecast } = require('./services/weather')
 const app = express()
 const port = 3000
+
+app.use(express.json())
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+app.post('/generate-routes', async (req, res) => {
+  try {
+    console.log('req', req.body)
+    const routes = await getRouting(req.body.vehiclesCount || 1)
+    res.send(routes)
+  } catch (error) {
+    console.error(error)
+    res.send(error)
+  }
+})
+
+app.post('/pregenerate-map', (req, res) => {
+  generateSignificantPoints()
+  res.send(true)
+})
+
+app.get('/weather-forecast', async (req, res) => {
+  const data = await loadWeatherForecast()
+  res.send(data)
+})
+
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Dapper app listening on port ${port}`)
 })
