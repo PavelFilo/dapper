@@ -1,7 +1,7 @@
 import { Modifications } from './partials/Modifications'
 import { Vehlices } from './partials/Vehlices'
 
-const Page = () => {
+export const Page = () => {
   return (
     <div className="flex">
       <Modifications />
@@ -12,5 +12,3 @@ const Page = () => {
     </div>
   )
 }
-
-export default Map
