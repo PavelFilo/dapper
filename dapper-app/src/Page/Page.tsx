@@ -1,12 +1,13 @@
+import { Map } from './partials/Map'
 import { Modifications } from './partials/Modifications'
 import { Vehlices } from './partials/Vehlices'
 
 export const Page = () => {
   return (
-    <div className="flex">
+    <div className="flex w-screen h-screen">
       <Modifications />
 
-      <div className="w-full">map</div>
+      <Map />
 
       <Vehlices />
     </div>

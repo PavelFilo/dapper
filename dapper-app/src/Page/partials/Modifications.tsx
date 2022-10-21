@@ -1,3 +1,9 @@
+import { Sidebar } from '../../components/Sidebar'
+
 export const Modifications = () => {
-  return <div className="flex">{/* TODO: modifications */}</div>
+  return (
+    <Sidebar isOpen={false} side="right">
+      aaa
+    </Sidebar>
+  )
 }
