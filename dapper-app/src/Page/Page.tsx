@@ -5,7 +5,9 @@ const Page = () => {
   return (
     <div className="flex">
       <Modifications />
+
       <div className="w-full">map</div>
+
       <Vehlices />
     </div>
   )
