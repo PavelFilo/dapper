@@ -1,24 +1,55 @@
+const { lineOverlap } = require('@turf/turf')
 const fs = require('fs')
 const { data: sourceMap } = require('../data/pasport')
 const { DEFAULT_WEIGHTS } = require('./constants')
+const { storeGeoJSON } = require('./helper')
 
-const getStreetClass = (value) => {
-  if (value === 'I') return 1
-  if (value === 'II') return 0.5
-  return 0
+const LAYER_PROPERTIES = {
+  IS_TROLLEY: 'isTrolley',
 }
 
-const loadSourceMap = () => ({
-  type: 'FeatureCollection',
-  features: sourceMap.features.map((feature) => ({
-    ...feature,
-    properties: {
-      d_class: getStreetClass(feature.properties.Trieda_komunikacie),
-    },
-  })),
-})
+// const getStreetClass = (value) => {
+//   if (value === 'I') return 1
+//   if (value === 'II') return 0.5
+//   return 0
+// }
+
+const loadSourceMap = () => {
+  const rawStreets = fs.readFileSync('./data/cesty.geojson')
+  const streets = JSON.parse(rawStreets)
+  return streets
+}
+//   type: 'FeatureCollection',
+//   features: sourceMap.features.map((feature) => ({
+//     ...feature,
+//     properties: {
+//       d_class: getStreetClass(feature.properties.Trieda_komunikacie),
+//     },
+//   })),
+// })
 
 const combinePointsMap = () => {}
+
+const combineLinesMap = (sourceMap, targetMap, propertyName, value) => {
+  for (let i = 0; i < targetMap.features.length; i++) {
+    const targetFeature = targetMap.features[i]
+
+    for (let j = 0; j < sourceMap.features.length; j++) {
+      const sourceFeature = sourceMap.features[j]
+
+      const overlap = lineOverlap(targetFeature, sourceFeature, {
+        tolerance: 0.005,
+      })
+
+      if (overlap.features.length > 0) {
+        targetMap.features[i].properties = {
+          ...targetMap.features[i].properties,
+          [propertyName]: value,
+        }
+      }
+    }
+  }
+}
 
 const getMiddlePoint = (coordinates) => [
   coordinates[Math.floor(coordinates.length / 2)],
@@ -37,15 +68,26 @@ const getPointsFromSignificantStreets = (streets) => ({
   ),
 })
 
-const computeScore = ({ properties, weights }) => {
-  return properties.d_class * weights.dClass
+const computeScore = (properties, weights) => {
+  return (properties?.[LAYER_PROPERTIES.IS_TROLLEY] || 0) * weights.isTrolley
+}
+
+const combineLayers = (map) => {
+  const rawdata = fs.readFileSync('./data/trolejbus.geojson')
+  const trolejbus = JSON.parse(rawdata)
+
+  combineLinesMap(trolejbus, map, LAYER_PROPERTIES.IS_TROLLEY, 1)
 }
 
 const prepareSignificantPoints = (weights) => {
   const finalWeights = { ...DEFAULT_WEIGHTS, ...weights }
+  console.log('finalWeights', finalWeights)
 
   const map = loadSourceMap()
 
+  combineLayers(map)
+
+  storeGeoJSON(map)
   map.features = map.features.filter(
     ({ properties }) => computeScore(properties, finalWeights) > 1
   )

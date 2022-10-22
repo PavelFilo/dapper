@@ -25,7 +25,6 @@ const generateTinForWeather = (weatherData) => {
 
   const tinMap = tin(dataToProcess, 'z')
 
-  console.log('tinMap', tinMap.features.length)
   return {
     type: 'FeatureCollection',
     features: tinMap.features.filter(
@@ -43,8 +42,6 @@ const getPointsToClear = async () => {
   const significantPoints = loadSignificantPointsFromFile()
   const tinMap = generateTinForWeather(weatherData)
 
-  console.log('tinMap', tinMap.features.length)
-
   const pointsToClear = pointsWithinPolygon(significantPoints, tinMap)
 
   return pointsToClear
@@ -61,6 +58,7 @@ const generateSignificantPoints = (weights) => {
   //TODO: finish this
   const significantPoints = prepareSignificantPoints(weights)
   fs.writeFileSync(SIGNIFICANT_POINTS_PATH, JSON.stringify(significantPoints))
+  return significantPoints
   // JSON.stringify(SIGNIFICANT_POINTS))
 }
 
