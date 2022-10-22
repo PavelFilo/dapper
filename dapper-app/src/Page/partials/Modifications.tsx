@@ -1,10 +1,25 @@
 import { useState } from 'react'
 import { Input } from '../../components/Input'
 import { Sidebar } from '../../components/Sidebar'
+import { Form, Formik, FormikHelpers, Field } from 'formik'
+import * as Yup from 'yup'
 
 interface IModificationsProps {
-  onFetchSignificantPoints: (vehiclesCount: number) => void
+  onFetchSignificantPoints: (
+    values: IModificationFormValues,
+    helpers: FormikHelpers<IModificationFormValues>
+  ) => void
 }
+
+const modificationValidationSchema = Yup.object().shape({
+  weightCar: Yup.number().required().min(0).max(1),
+  weightTro: Yup.number().required().min(0).max(1),
+  weightBla: Yup.number().required().min(0).max(1),
+})
+
+export type IModificationFormValues = Yup.InferType<
+  typeof modificationValidationSchema
+>
 
 export const Modifications = ({
   onFetchSignificantPoints,
@@ -21,22 +36,63 @@ export const Modifications = ({
       </button>
 
       <Sidebar className="px-4 py-5" isOpen={isOpen} side="left">
-        <div className="h-full flex flex-col">
-          <div className="gap-2 flex-1 flex-col flex items-start">
-            <button onClick={() => setIsOpen(false)}>close</button>
+        <Formik
+          validationSchema={modificationValidationSchema}
+          initialValues={modificationValidationSchema.cast({
+            weightCar: 1,
+            weightTro: 1,
+            weightBla: 1,
+          })}
+          onSubmit={onFetchSignificantPoints}
+        >
+          {({ isValid, isSubmitting }) => (
+            <Form className="h-full flex flex-col">
+              <div className="gap-2 flex-1 flex-col flex items-start">
+                <button
+                  type="button"
+                  className="float-right"
+                  onClick={() => setIsOpen(false)}
+                >
+                  close
+                </button>
 
-            <Input label="Layer 1" />
-            <Input label="Layer 2" />
-            <Input label="Layer 3" />
-            <Input label="Layer 4" />
-          </div>
+                <Field name="weightCar">
+                  {({ field }: any) => (
+                    <Input
+                      type="number"
+                      label="Weight of car layer"
+                      {...field}
+                    />
+                  )}
+                </Field>
+                <Field name="weightTro">
+                  {({ field }: any) => (
+                    <Input
+                      type="number"
+                      label="Weight of bus layer"
+                      {...field}
+                    />
+                  )}
+                </Field>
+                <Field name="weightBla">
+                  {({ field }: any) => (
+                    <Input
+                      type="number"
+                      label="Weight of bla layer"
+                      {...field}
+                    />
+                  )}
+                </Field>
+              </div>
 
-          <div className="flex items-start">
-            <button onClick={() => onFetchSignificantPoints(2)}>
-              GENERATE MAP
-            </button>
-          </div>
-        </div>
+              <div className="flex items-start">
+                <button disabled={!isValid || isSubmitting} type="submit">
+                  GENERTE MAP
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </Sidebar>
     </>
   )
