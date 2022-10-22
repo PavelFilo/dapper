@@ -3,6 +3,7 @@ import { Input } from '../../components/Input'
 import { Sidebar } from '../../components/Sidebar'
 import { Form, Formik, FormikHelpers, Field } from 'formik'
 import * as Yup from 'yup'
+import { Button } from '../../components/Button'
 
 interface IModificationsProps {
   onFetchSignificantPoints: (
@@ -78,9 +79,13 @@ export const Modifications = ({
               </div>
 
               <div className="flex items-start">
-                <button disabled={!isValid || isSubmitting} type="submit">
+                <Button
+                  loading={isSubmitting}
+                  disabled={!isValid || isSubmitting}
+                  type="submit"
+                >
                   GENERATE MAP
-                </button>
+                </Button>
               </div>
             </Form>
           )}

@@ -53,7 +53,7 @@ button {
   transition: border-color 0.25s;
   background-color: white;
 
-  @apply disabled:opacity-75 disabled:cursor-not-allowed;
+  @apply disabled:opacity-75 disabled:cursor-not-allowed inline-flex items-center;
 }
 
 button[type='button'], button[type='submit'] {

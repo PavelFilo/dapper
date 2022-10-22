@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import { Form, Formik, FormikHelpers, Field } from 'formik'
 import { IRoute } from './Map'
 import { VehiclesTable } from './VehiclesTable'
+import { Button } from '../../components/Button'
 
 export type TRouteData = { routes: IRoute[]; summary: any } | undefined
 
@@ -75,12 +76,13 @@ export const Routes = ({
               </div>
 
               <div className="flex items-start">
-                <button
+                <Button
+                  loading={isSubmitting}
                   disabled={!hasSignificantPoints || !isValid || isSubmitting}
                   type="submit"
                 >
                   GENERATE ROUTES
-                </button>
+                </Button>
               </div>
             </Form>
           )}
