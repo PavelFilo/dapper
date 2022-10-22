@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import { generateRoutes } from '../../api/endpoints'
 import { Input } from '../../components/Input'
 import { Sidebar } from '../../components/Sidebar'
 
 export const Vehlices = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [value, setValue] = useState(1)
   return (
     <>
       <button
@@ -22,11 +24,23 @@ export const Vehlices = () => {
               </button>
             </div>
 
-            <Input type="number" label="Number of vehicles" />
+            <Input
+              type="number"
+              label="Number of vehicles"
+              value={value}
+              onChange={({ target: { value } }) => setValue(+value)}
+            />
           </div>
 
           <div className="flex items-start">
-            <button>GENERTE ROUTES</button>
+            <button
+              onClick={async () => {
+                const res = await generateRoutes({ vehiclesCount: 3 })
+                console.log(res)
+              }}
+            >
+              GENERTE ROUTES
+            </button>
           </div>
         </div>
       </Sidebar>
