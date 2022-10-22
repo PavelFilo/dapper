@@ -7,7 +7,8 @@ const SIGNIFICANT_POINTS_PATH = './data/significantPoints.json'
 
 const DEFAULT_WEIGHTS = {
   class: 5,
-  isTrolley: 10,
+  isTrolley: 2,
+  isCriticalPT: 5,
 }
 
 module.exports = {
