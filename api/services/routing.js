@@ -1,5 +1,5 @@
 const { default: fetch } = require('node-fetch')
-const { DEPO_LAT, DEPO_LON } = require('./constants')
+const { DEPO_LAT, DEPO_LON, AMOUNT_OF_POINTS } = require('./constants')
 const { getPointsToClear } = require('./map')
 const polyline = require('@mapbox/polyline')
 
@@ -36,7 +36,7 @@ const createJobsObject = async (body) => {
 const getRouting = async (input) => {
   const jobs = await createJobsObject(input)
   const body = {
-    jobs: jobs.slice(0, 40),
+    jobs: jobs.slice(0, AMOUNT_OF_POINTS),
     vehicles: createVehiclesObject(input.depos || DEFAULT_DEPO),
     options: { g: true },
   }

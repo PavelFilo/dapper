@@ -242,6 +242,7 @@ const prepareSignificantPoints = ({
       },
     }))
     .filter(({ properties }) => properties.score > (threshold || 1))
+    .sort((a, b) => b.properties.score - a.properties.score)
 
   const points = getPointsFromSignificantStreets(map)
 
