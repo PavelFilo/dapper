@@ -9,6 +9,7 @@ const DEFAULT_WEIGHTS = {
   class: 5,
   isTrolley: 2,
   isCriticalPT: 5,
+  isSchoolNearby: 1,
 }
 
 module.exports = {
