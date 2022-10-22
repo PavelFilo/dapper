@@ -3,10 +3,12 @@ const express = require('express')
 const { generateSignificantPoints } = require('./services/map')
 const { getRouting } = require('./services/routing')
 const { loadWeatherForecast } = require('./services/weather')
+const cors = require('cors')
 const app = express()
 const port = 3002
 
 app.use(express.json())
+app.use(cors())
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
