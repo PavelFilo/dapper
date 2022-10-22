@@ -1,0 +1,23 @@
+{
+    "type": "FeatureCollection",
+    "name": "hospitals",
+    "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+    "features": [
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [16.9983832, 48.1817233 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [16.9708299, 48.1687626 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [16.9956802, 48.1631801 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [17.0324573, 48.1547826 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [17.0685923, 48.1556961 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [17.0664907, 48.1482902 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [17.0764471, 48.1442241 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [17.0957161, 48.1434503 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [17.0960165, 48.1453116 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [17.0969164, 48.1480508 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [17.124641, 48.1483472 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [17.1330524, 48.152642 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [17.1364857, 48.1565929 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [17.1296747, 48.1553957 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [17.113144, 48.1631955 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [17.1226024, 48.1854443 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [17.1385958, 48.1976538 ] } },
+        { "type": "Feature", "properties": { "police": 0.75 }, "geometry": { "type": "Point", "coordinates": [16.9762158, 48.1234188 ] } } ]}
