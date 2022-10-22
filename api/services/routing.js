@@ -25,10 +25,12 @@ const createJobsObject = async () => {
 const getRouting = async (numberOfVehicles) => {
   const jobs = await createJobsObject()
   const body = {
-    jobs: jobs.slice(0, 60),
+    jobs: jobs.slice(0, 40),
     vehicles: createVehiclesObject(numberOfVehicles),
     options: { g: true },
   }
+
+  console.log('jobs', body)
 
   const request = await fetch('https://api.openrouteservice.org/optimization', {
     method: 'POST',
@@ -40,6 +42,8 @@ const getRouting = async (numberOfVehicles) => {
   })
 
   const response = await request.json()
+
+  console.log('response', response)
 
   //   polyline.decode('cxl_cBqwvnS|Dy@ogFyxmAf`IsnA|CjFzCsHluD_k@hi@ljL', 6);
   return {

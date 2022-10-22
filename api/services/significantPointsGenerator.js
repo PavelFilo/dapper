@@ -103,7 +103,11 @@ const generateAndStoreSourceMap = () => {
   return map
 }
 
-const prepareSignificantPoints = ({ weights, preGenerateSourceMap }) => {
+const prepareSignificantPoints = ({
+  weights,
+  preGenerateSourceMap,
+  threshold,
+}) => {
   const finalWeights = { ...DEFAULT_WEIGHTS, ...weights }
   console.log('finalWeights', finalWeights)
 
@@ -112,7 +116,8 @@ const prepareSignificantPoints = ({ weights, preGenerateSourceMap }) => {
     : loadFinalMap()
 
   map.features = map.features.filter(
-    ({ properties }) => computeScore(properties, finalWeights) > 1
+    ({ properties }) =>
+      computeScore(properties, finalWeights) > (threshold || 1)
   )
 
   const points = getPointsFromSignificantStreets(map)
