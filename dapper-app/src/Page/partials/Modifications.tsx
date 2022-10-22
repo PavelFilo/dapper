@@ -2,6 +2,9 @@ import { useState } from 'react'
 import { Input } from '../../components/Input'
 import { Sidebar } from '../../components/Sidebar'
 import { Form, Formik, FormikHelpers, Field } from 'formik'
+import Specifition from '../../assets/form-24-regular.svg'
+import Close from '../../assets/close-big.svg'
+
 import * as Yup from 'yup'
 import { Button } from '../../components/Button'
 
@@ -30,10 +33,10 @@ export const Modifications = ({
   return (
     <>
       <button
-        className="z-500 absolute left-4 top-5"
+        className="z-500 absolute left-4 top-5 p-2 rounded-3xl bg-dark"
         onClick={() => setIsOpen(true)}
       >
-        open
+        <img className="specifition" src={Specifition} alt="" />
       </button>
 
       <Sidebar className="px-4 py-5" isOpen={isOpen} side="left">
@@ -48,15 +51,15 @@ export const Modifications = ({
         >
           {({ isValid, isSubmitting }) => (
             <Form className="h-full flex flex-col">
-              <div className="gap-2 flex-1 flex-col flex items-start">
+              <div className="flex items-end justify-end pb-3 bg-dark">
                 <button
-                  type="button"
-                  className="float-right"
+                  className=" p-1 rounded-3xl bg-dark "
                   onClick={() => setIsOpen(false)}
                 >
-                  close
+                  <img className="close" src={Close} alt="" />
                 </button>
-
+              </div>
+              <div className="gap-2 flex-1 flex-col flex items-start">
                 <Field name="class">
                   {({ field }: any) => (
                     <Input type="number" label="Class of the road" {...field} />
@@ -78,7 +81,7 @@ export const Modifications = ({
                 </Field>
               </div>
 
-              <div className="flex items-start">
+              <div className="flex items-center justify-center pb-5">
                 <Button
                   loading={isSubmitting}
                   disabled={!isValid || isSubmitting}
