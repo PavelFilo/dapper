@@ -39,6 +39,7 @@ const prepareSignificantPoints = (weights) => {
 
   const points = getPointsFromSignificantStreets(map)
   console.log('her')
+
   return points
 }
 
