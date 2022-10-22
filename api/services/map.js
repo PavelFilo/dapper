@@ -54,9 +54,9 @@ const loadSignificantPointsFromFile = () => {
   return points
 }
 
-const generateSignificantPoints = (weights) => {
+const generateSignificantPoints = (body) => {
   //TODO: finish this
-  const significantPoints = prepareSignificantPoints(weights)
+  const significantPoints = prepareSignificantPoints(body)
   fs.writeFileSync(SIGNIFICANT_POINTS_PATH, JSON.stringify(significantPoints))
   return significantPoints
   // JSON.stringify(SIGNIFICANT_POINTS))

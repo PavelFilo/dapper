@@ -19,14 +19,6 @@ const loadSourceMap = () => {
   const streets = JSON.parse(rawStreets)
   return streets
 }
-//   type: 'FeatureCollection',
-//   features: sourceMap.features.map((feature) => ({
-//     ...feature,
-//     properties: {
-//       d_class: getStreetClass(feature.properties.Trieda_komunikacie),
-//     },
-//   })),
-// })
 
 const combinePointsMap = () => {}
 
@@ -79,15 +71,34 @@ const combineLayers = (map) => {
   combineLinesMap(trolejbus, map, LAYER_PROPERTIES.IS_TROLLEY, 1)
 }
 
-const prepareSignificantPoints = (weights) => {
-  const finalWeights = { ...DEFAULT_WEIGHTS, ...weights }
-  console.log('finalWeights', finalWeights)
+const loadFinalMap = () => {
+  const rawdata = fs.readFileSync('./data/final.geojson')
+  return JSON.parse(rawdata)
+}
 
+const storeFinalMap = (data) => {
+  fs.writeFileSync('./data/final.geojson', JSON.stringify(data))
+}
+
+const generateAndStoreSourceMap = () => {
+  console.log('Pregenerating map')
   const map = loadSourceMap()
 
   combineLayers(map)
 
-  storeGeoJSON(map)
+  storeFinalMap(map)
+
+  return map
+}
+
+const prepareSignificantPoints = ({ weights, preGenerateSourceMap }) => {
+  const finalWeights = { ...DEFAULT_WEIGHTS, ...weights }
+  console.log('finalWeights', finalWeights)
+
+  const map = preGenerateSourceMap
+    ? generateAndStoreSourceMap()
+    : loadFinalMap()
+
   map.features = map.features.filter(
     ({ properties }) => computeScore(properties, finalWeights) > 1
   )
