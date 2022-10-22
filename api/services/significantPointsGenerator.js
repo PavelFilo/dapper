@@ -19,10 +19,15 @@ const loadSourceMap = () => ({
 
 const combinePointsMap = () => {}
 
+const getNPointsFromLine = (coordinates, n = 3) => [
+  coordinates[0],
+  coordinates[coordinates.length - 1],
+]
+
 const getPointsFromSignificantStreets = (streets) => ({
   type: 'FeatureCollection',
   features: streets.features.flatMap((street) =>
-    street.geometry.coordinates.map((coords) => ({
+    getNPointsFromLine(street.geometry.coordinates[0]).map((coords) => ({
       type: 'Feature',
       geometry: {
         type: 'Point',

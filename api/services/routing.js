@@ -25,10 +25,12 @@ const createJobsObject = async () => {
 const getRouting = async (numberOfVehicles) => {
   const jobs = await createJobsObject()
   const body = {
-    jobs,
+    jobs: jobs.slice(0, 60),
     vehicles: createVehiclesObject(numberOfVehicles),
     options: { g: true },
   }
+
+  console.log('jobs', jobs[0])
 
   console.log('body', body)
 
@@ -42,6 +44,7 @@ const getRouting = async (numberOfVehicles) => {
   })
 
   const response = await request.json()
+  console.log('response', response)
   //   polyline.decode('cxl_cBqwvnS|Dy@ogFyxmAf`IsnA|CjFzCsHluD_k@hi@ljL', 6);
   return {
     ...response,
