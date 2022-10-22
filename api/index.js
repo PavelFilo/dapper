@@ -4,7 +4,7 @@ const { generateSignificantPoints } = require('./services/map')
 const { getRouting } = require('./services/routing')
 const { loadWeatherForecast } = require('./services/weather')
 const app = express()
-const port = 3001
+const port = 3002
 
 app.use(express.json())
 
