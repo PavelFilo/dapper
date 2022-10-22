@@ -11,10 +11,12 @@ import {
 const DEPO_LAT = 48.152778
 const DEPO_LON = 17.127123
 
-interface IRoute {
+export interface IRoute {
   geometry: [number, number][]
   cost: number
   distance: number
+  duration: number
+  vehicle: number
 }
 interface ISignificantPoint {
   geometry: { coordinates: [number, number] }

@@ -3,9 +3,14 @@ import { Input } from '../../components/Input'
 import { Sidebar } from '../../components/Sidebar'
 import * as Yup from 'yup'
 import { Form, Formik, FormikHelpers, Field } from 'formik'
+import { IRoute } from './Map'
+import { VehiclesTable } from './VehiclesTable'
+
+export type TRouteData = { routes: IRoute[]; summary: any } | undefined
 
 interface IVehiclesProps {
   hasSignificantPoints?: boolean
+  routeData?: TRouteData
 
   onFetchRoutes: (
     values: IRoutesFormValues,
@@ -21,6 +26,7 @@ export type IRoutesFormValues = Yup.InferType<typeof routesValidationSchema>
 
 export const Routes = ({
   hasSignificantPoints,
+  routeData,
   onFetchRoutes,
 }: IVehiclesProps) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -64,6 +70,8 @@ export const Routes = ({
                     />
                   )}
                 </Field>
+
+                <VehiclesTable routeData={routeData} />
               </div>
 
               <div className="flex items-start">

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { generateMap, generateRoutes } from '../api/endpoints'
 import { SplashScreenLoader } from '../components/SplashScreenLoader'
-import { Map } from './partials/Map'
+import { IRoute, Map } from './partials/Map'
 import {
   IModificationFormValues,
   Modifications,
@@ -10,7 +10,9 @@ import { IRoutesFormValues, Routes } from './partials/Routes'
 import { FormikHelpers } from 'formik'
 
 export const Page = () => {
-  const [routes, setRoutes] = useState()
+  const [routeData, setRouteData] = useState<
+    { routes: IRoute[]; summary: any } | undefined
+  >()
   const [significantPoints, setSignificantPoints] = useState()
 
   const onFetchRoutes = useCallback(
@@ -22,7 +24,7 @@ export const Page = () => {
       const res = await generateRoutes({ vehiclesCount })
 
       if (res.success) {
-        setRoutes(res?.content?.routes)
+        setRouteData(res?.content)
         setSubmitting(false)
       }
     },
@@ -42,7 +44,7 @@ export const Page = () => {
       })
 
       if (res.success) {
-        setRoutes(undefined)
+        setRouteData(undefined)
         setSignificantPoints(res?.content?.features.slice(0, 40))
         setSubmitting(false)
       }
@@ -58,9 +60,13 @@ export const Page = () => {
         <div className="flex w-screen h-screen">
           <Modifications onFetchSignificantPoints={onFetchSignificantPoints} />
 
-          <Map routes={routes} significantPoints={significantPoints} />
+          <Map
+            routes={routeData?.routes}
+            significantPoints={significantPoints}
+          />
 
           <Routes
+            routeData={routeData}
             hasSignificantPoints={!!significantPoints}
             onFetchRoutes={onFetchRoutes}
           />
