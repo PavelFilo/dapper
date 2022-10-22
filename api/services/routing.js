@@ -11,7 +11,7 @@ const createVehiclesObject = (numberOfVehicles) =>
       id: index + 1,
       profile: 'driving-car',
       start: [DEPO_LON, DEPO_LAT],
-      end: [DEPO_LON, DEPO_LAT],
+      // end: [DEPO_LON, DEPO_LAT],
     }))
 
 const createJobsObject = async (body) => {

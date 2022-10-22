@@ -12,9 +12,9 @@ interface IModificationsProps {
 }
 
 const modificationValidationSchema = Yup.object().shape({
-  weightCar: Yup.number().required().min(0).max(1),
-  weightTro: Yup.number().required().min(0).max(1),
-  weightBla: Yup.number().required().min(0).max(1),
+  class: Yup.number().required().min(0),
+  isTrolley: Yup.number().required().min(0),
+  isCriticalPT: Yup.number().required().min(0),
 })
 
 export type IModificationFormValues = Yup.InferType<
@@ -39,9 +39,9 @@ export const Modifications = ({
         <Formik
           validationSchema={modificationValidationSchema}
           initialValues={modificationValidationSchema.cast({
-            weightCar: 1,
-            weightTro: 1,
-            weightBla: 1,
+            class: 1,
+            isTrolley: 1,
+            isCriticalPT: 1,
           })}
           onSubmit={onFetchSignificantPoints}
         >
@@ -56,29 +56,21 @@ export const Modifications = ({
                   close
                 </button>
 
-                <Field name="weightCar">
+                <Field name="class">
                   {({ field }: any) => (
-                    <Input
-                      type="number"
-                      label="Weight of car layer"
-                      {...field}
-                    />
+                    <Input type="number" label="Class of the road" {...field} />
                   )}
                 </Field>
-                <Field name="weightTro">
+                <Field name="isTrolley">
                   {({ field }: any) => (
-                    <Input
-                      type="number"
-                      label="Weight of bus layer"
-                      {...field}
-                    />
+                    <Input type="number" label="Trolley roads" {...field} />
                   )}
                 </Field>
-                <Field name="weightBla">
+                <Field name="isCriticalPT">
                   {({ field }: any) => (
                     <Input
                       type="number"
-                      label="Weight of bla layer"
+                      label="Critical public transport"
                       {...field}
                     />
                   )}
@@ -87,7 +79,7 @@ export const Modifications = ({
 
               <div className="flex items-start">
                 <button disabled={!isValid || isSubmitting} type="submit">
-                  GENERTE MAP
+                  GENERATE MAP
                 </button>
               </div>
             </Form>

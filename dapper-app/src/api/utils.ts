@@ -26,11 +26,15 @@ export const CallAPI = async ({
   endpoint,
 }: IAPICallConfig) => {
   try {
+    console.log(body)
     const responseRaw: Response = await fetch(
       'http://localhost:3002/' + endpoint,
       {
-        body: body ? JSON.stringify(body) : undefined,
-        method: method,
+        body: JSON.stringify(body),
+        headers: {
+          'content-type': 'application/json',
+        },
+        method,
       }
     )
 

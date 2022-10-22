@@ -6,7 +6,7 @@ const MIN_SNOW_VALUE = 0.000001
 const SIGNIFICANT_POINTS_PATH = './data/significantPoints.json'
 
 const DEFAULT_WEIGHTS = {
-  dClass: 5,
+  class: 5,
   isTrolley: 10,
 }
 

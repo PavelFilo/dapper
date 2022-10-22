@@ -36,10 +36,14 @@ export const Page = () => {
     ) => {
       setSubmitting(true)
 
-      const res = await generateMap()
+      const res = await generateMap({
+        weights: { class: values.class, isTrolley: values.isTrolley },
+        threshold: 1,
+      })
 
       if (res.success) {
-        setSignificantPoints(res?.content?.features)
+        setRoutes(undefined)
+        setSignificantPoints(res?.content?.features.slice(0, 40))
         setSubmitting(false)
       }
     },
@@ -56,7 +60,10 @@ export const Page = () => {
 
           <Map routes={routes} significantPoints={significantPoints} />
 
-          <Routes onFetchRoutes={onFetchRoutes} />
+          <Routes
+            hasSignificantPoints={!!significantPoints}
+            onFetchRoutes={onFetchRoutes}
+          />
         </div>
       )}
     </>

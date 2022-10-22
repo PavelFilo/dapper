@@ -8,8 +8,8 @@ import {
   Circle,
 } from 'react-leaflet'
 
-const DEPO_LAT = 48.161324
-const DEPO_LON = 17.14068
+const DEPO_LAT = 48.152778
+const DEPO_LON = 17.127123
 
 interface IRoute {
   geometry: [number, number][]
@@ -25,7 +25,7 @@ interface IMapProps {
   significantPoints?: ISignificantPoint[]
 }
 
-const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple']
+const colors = ['#FFABAB', '#87B37A', '#AF9164', '#4281A4', 'orange', 'purple']
 
 export const Map = ({ routes, significantPoints }: IMapProps) => {
   console.log(significantPoints)
@@ -35,11 +35,23 @@ export const Map = ({ routes, significantPoints }: IMapProps) => {
       <MapContainer center={[DEPO_LAT, DEPO_LON]} zoom={13} zoomControl={false}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
         />
         <Marker position={[DEPO_LAT, DEPO_LON]}>
           <Popup>DEPO</Popup>
         </Marker>
+
+        {significantPoints?.map(({ geometry }, index) => (
+          <Circle
+            key={index}
+            center={[geometry.coordinates[1], geometry.coordinates[0]]}
+            pathOptions={{
+              fillColor: '#E7FFAC',
+              color: '#E7FFAC',
+            }}
+            radius={20}
+          />
+        ))}
 
         {routes?.map((route, index) => {
           return (
@@ -53,15 +65,6 @@ export const Map = ({ routes, significantPoints }: IMapProps) => {
             />
           )
         })}
-
-        {significantPoints?.map(({ geometry }, index) => (
-          <Circle
-            key={index}
-            center={[geometry.coordinates[1], geometry.coordinates[0]]}
-            pathOptions={{ fillColor: 'red' }}
-            radius={20}
-          />
-        ))}
 
         <ZoomControl position="bottomright" />
       </MapContainer>

@@ -5,6 +5,8 @@ import * as Yup from 'yup'
 import { Form, Formik, FormikHelpers, Field } from 'formik'
 
 interface IVehiclesProps {
+  hasSignificantPoints?: boolean
+
   onFetchRoutes: (
     values: IRoutesFormValues,
     helpers: FormikHelpers<IRoutesFormValues>
@@ -17,7 +19,10 @@ const routesValidationSchema = Yup.object().shape({
 
 export type IRoutesFormValues = Yup.InferType<typeof routesValidationSchema>
 
-export const Routes = ({ onFetchRoutes }: IVehiclesProps) => {
+export const Routes = ({
+  hasSignificantPoints,
+  onFetchRoutes,
+}: IVehiclesProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -62,8 +67,11 @@ export const Routes = ({ onFetchRoutes }: IVehiclesProps) => {
               </div>
 
               <div className="flex items-start">
-                <button disabled={!isValid || isSubmitting} type="submit">
-                  GENERTE ROUTES
+                <button
+                  disabled={!hasSignificantPoints || !isValid || isSubmitting}
+                  type="submit"
+                >
+                  GENERATE ROUTES
                 </button>
               </div>
             </Form>
