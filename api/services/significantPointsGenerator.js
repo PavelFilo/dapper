@@ -6,6 +6,7 @@ const { data: pasportData } = require('../data/pasport')
 const LAYER_PROPERTIES = {
   IS_TROLLEY: 'isTrolley',
   CLASS: 'class',
+  IS_CRITICAL_PT: 'isCriticalPT',
 }
 
 const loadSourceMap = () => {
@@ -46,6 +47,7 @@ const getPointsFromSignificantStreets = (streets) => ({
   features: streets.features.flatMap((street) =>
     getMiddlePoint(street.geometry.coordinates[0]).map((coords) => ({
       type: 'Feature',
+      properties: street.properties,
       geometry: {
         type: 'Point',
         coordinates: [coords[0], coords[1]],
@@ -81,6 +83,11 @@ const combineLayers = (map) => {
       return 0
     }
   )
+
+  const rawCriticalMHD = fs.readFileSync('./data/kritikalMhd.geojson')
+  const criticalMHD = JSON.parse(rawCriticalMHD)
+
+  combineLinesMap(criticalMHD, map, LAYER_PROPERTIES.IS_CRITICAL_PT, () => true)
 }
 
 const loadFinalMap = () => {

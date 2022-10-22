@@ -2,7 +2,6 @@ const { default: fetch } = require('node-fetch')
 const { DEPO_LAT, DEPO_LON } = require('./constants')
 const { getPointsToClear } = require('./map')
 const polyline = require('@mapbox/polyline')
-// const { SIGNIFICANT_POINTS } = require('./mock')
 
 const createVehiclesObject = (numberOfVehicles) =>
   Array(numberOfVehicles)
@@ -11,7 +10,6 @@ const createVehiclesObject = (numberOfVehicles) =>
       id: index + 1,
       profile: 'driving-car',
       start: [DEPO_LON, DEPO_LAT],
-      end: [DEPO_LON, DEPO_LAT],
     }))
 
 const createJobsObject = async (body) => {
@@ -42,7 +40,7 @@ const getRouting = async (input) => {
   })
 
   const response = await request.json()
-
+  console.log('response', response)
   //   polyline.decode('cxl_cBqwvnS|Dy@ogFyxmAf`IsnA|CjFzCsHluD_k@hi@ljL', 6);
   return {
     ...response,
