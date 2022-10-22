@@ -2,7 +2,13 @@ import { useState } from 'react'
 import { Input } from '../../components/Input'
 import { Sidebar } from '../../components/Sidebar'
 
-export const Modifications = () => {
+interface IModificationsProps {
+  onFetchSignificantPoints: (vehiclesCount: number) => void
+}
+
+export const Modifications = ({
+  onFetchSignificantPoints,
+}: IModificationsProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -26,7 +32,9 @@ export const Modifications = () => {
           </div>
 
           <div className="flex items-start">
-            <button>GENERATE MAP</button>
+            <button onClick={() => onFetchSignificantPoints(2)}>
+              GENERATE MAP
+            </button>
           </div>
         </div>
       </Sidebar>

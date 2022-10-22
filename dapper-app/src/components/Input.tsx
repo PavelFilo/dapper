@@ -8,7 +8,7 @@ export const Input = ({ label, name, ...passingProps }: IInputProps) => {
       {label && (
         <label
           htmlFor={name}
-          className="block mb-2 text-sm font-medium text-white dark:text-gray-500"
+          className="block mb-2 text-sm font-medium text-white dark:text-gray"
         >
           {label}
         </label>

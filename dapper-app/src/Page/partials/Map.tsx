@@ -6,19 +6,26 @@ import {
   Polyline,
   ZoomControl,
 } from 'react-leaflet'
-import { data } from './mock'
-
-const polyline = data.routes[0].geometry.map((step) => [
-  step[0] * 10,
-  step[1] * 10,
-])
 
 const DEPO_LAT = 48.161324
 const DEPO_LON = 17.14068
 
-const limeOptions = { color: 'black' }
+interface IRoute {
+  geometry: [number, number][]
+  cost: number
+  distance: number
+}
 
-export const Map = () => {
+interface IMapProps {
+  routes?: IRoute[]
+  significantPoints?: IRoute[]
+}
+
+const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple']
+
+export const Map = ({ routes }: IMapProps) => {
+  console.log(routes)
+
   return (
     <div id="map">
       <MapContainer center={[DEPO_LAT, DEPO_LON]} zoom={13} zoomControl={false}>
@@ -30,7 +37,18 @@ export const Map = () => {
           <Popup>DEPO</Popup>
         </Marker>
 
-        <Polyline pathOptions={limeOptions} positions={polyline as any} />
+        {routes?.map((route, index) => {
+          return (
+            <Polyline
+              key={route.cost + route.distance}
+              pathOptions={{ color: colors[index] }}
+              positions={route.geometry.map(([lat, lng]) => [
+                lat * 10,
+                lng * 10,
+              ])}
+            />
+          )
+        })}
 
         <ZoomControl position="bottomright" />
       </MapContainer>
