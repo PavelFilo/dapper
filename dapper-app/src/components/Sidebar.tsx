@@ -7,11 +7,16 @@ interface ISidebarProps {
 }
 
 export const Sidebar = ({ isOpen, side, children }: ISidebarProps) => {
+  const translateMap = {
+    right: isOpen ? 'translate-x-0' : 'translate-x-full',
+    left: isOpen ? '-translate-x-0' : '-translate-x-full',
+  }
+
   return (
     <div
-      className={`z-1000 bg-blue absolute h-screen w-24 ${side}-0 ${
-        side === 'right' ? '' : '-'
-      }translate-x-${isOpen ? 'full' : '0'}`}
+      className={`${
+        side === 'right' ? 'right-0' : 'left-0'
+      } z-1000 bg-blue absolute h-screen w-24 ${translateMap[side]}`}
     >
       {children}
     </div>
