@@ -8,7 +8,6 @@
   line-height: 24px;
   font-weight: 400;
 
-  color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -56,10 +55,6 @@ button {
   @apply disabled:opacity-75 disabled:cursor-not-allowed inline-flex items-center;
 }
 
-button[type='button'], button[type='submit'] {
-  background-color: white;
-}
-
 button:hover {
   border-color: #646cff;
 }
@@ -90,7 +85,6 @@ button:disabled {
   filter: invert(100%) sepia(94%) saturate(15%) hue-rotate(69deg) brightness(105%) contrast(101%);
 }
 
-@media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -101,4 +95,3 @@ button:disabled {
   button {
     background-color: #f9f9f9;
   }
-}

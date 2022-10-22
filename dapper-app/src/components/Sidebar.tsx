@@ -22,7 +22,7 @@ export const Sidebar = ({
     <div
       className={`${
         side === 'right' ? 'right-0 rounded-l-lg' : 'left-0 rounded-r-lg'
-      } z-1000 transition-transform bg-dark dark:bg-white absolute h-screen w-80 ${
+      } z-1000 transition-transform bg-opacity-90 bg-dark absolute h-screen w-80 ${
         translateMap[side]
       } ${className}`}
     >

@@ -33,7 +33,9 @@ export const Modifications = ({
   return (
     <>
       <button
-        className="z-500 absolute left-4 top-5 p-2 rounded-3xl bg-dark"
+        className={`z-500 absolute left-4 top-5 p-2 rounded-3xl transition-opacity bg-dark ${
+          isOpen ? 'opacity-0' : 'opacity-1'
+        }`}
         onClick={() => setIsOpen(true)}
       >
         <img className="specifition" src={Specifition} alt="" />
@@ -51,9 +53,10 @@ export const Modifications = ({
         >
           {({ isValid, isSubmitting }) => (
             <Form className="h-full flex flex-col">
-              <div className="flex items-end justify-end pb-3 bg-dark">
+              <div className="flex items-end justify-end pb-3">
                 <button
-                  className=" p-1 rounded-3xl bg-dark "
+                  type="button"
+                  className=" p-1 rounded-3xl "
                   onClick={() => setIsOpen(false)}
                 >
                   <img className="close" src={Close} alt="" />

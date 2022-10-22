@@ -36,12 +36,14 @@ export const Routes = ({
 
   return (
     <>
-      <button
-        className="z-400 absolute right-4 top-5 p-2 rounded-3xl bg-dark"
-        onClick={() => setIsOpen(true)}
-      >
-        <img className="vehicle " src={Vehicle} alt="" />
-      </button>
+      {!isOpen && (
+        <button
+          className="z-400 absolute right-4 top-5 p-2 rounded-3xl bg-dark"
+          onClick={() => setIsOpen(true)}
+        >
+          <img className="vehicle " src={Vehicle} alt="" />
+        </button>
+      )}
 
       <Sidebar className="px-4 py-5" isOpen={isOpen} side="right">
         <Formik
@@ -56,7 +58,8 @@ export const Routes = ({
               <div className="gap-2 flex-1 flex-col flex items-start">
                 <div className="flex items-start justify-start pb-3">
                   <button
-                    className=" p-1 rounded-3xl bg-dark "
+                    type="button"
+                    className=" p-1 rounded-3xl"
                     onClick={() => setIsOpen(false)}
                   >
                     <img className="close" src={Close} alt="" />

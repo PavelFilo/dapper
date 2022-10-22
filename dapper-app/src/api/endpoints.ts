@@ -22,6 +22,7 @@ export const generateRoutes = async (body: IGenerateRoutesInput) => {
     endpoint: 'generate-routes',
   })
 }
+
 export const generateMap = async ({
   weights,
   threshold,
@@ -34,5 +35,12 @@ export const generateMap = async ({
       threshold,
       preGenerateSourceMap,
     },
+  })
+}
+
+export const weatherForecast = async () => {
+  return CallAPI({
+    method: 'GET',
+    endpoint: 'weather-forecast',
   })
 }

@@ -13,7 +13,7 @@ const Spinner = () => (
       cy="12"
       r="10"
       stroke="currentColor"
-      stroke-width="4"
+      strokeWidth="4"
     ></circle>
     <path
       className="opacity-75"
@@ -29,7 +29,7 @@ interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button = ({ loading, ...props }: IButtonProps) => {
   return (
-    <button disabled={loading} {...props}>
+    <button className="bg-white" disabled={loading} {...props}>
       {loading && <Spinner />}
 
       {props.children}
