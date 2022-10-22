@@ -29,7 +29,7 @@ export const Map = () => {
           </Popup>
         </Marker>
 
-        <Polyline pathOptions={limeOptions} positions={polyline} />
+        <Polyline pathOptions={limeOptions} positions={polyline as any} />
       </MapContainer>
     </div>
   )
