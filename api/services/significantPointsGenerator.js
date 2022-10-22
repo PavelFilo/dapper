@@ -185,10 +185,15 @@ const prepareSignificantPoints = ({
     ? generateAndStoreSourceMap()
     : loadFinalMap()
 
-  map.features = map.features.filter(
-    ({ properties }) =>
-      computeScore(properties, finalWeights) > (threshold || 1)
-  )
+  map.features = map.features
+    .map((feature) => ({
+      ...feature,
+      properties: {
+        ...feature.properties,
+        score: computeScore(feature.properties, finalWeights),
+      },
+    }))
+    .filter(({ properties }) => properties.score > (threshold || 1))
 
   const points = getPointsFromSignificantStreets(map)
 

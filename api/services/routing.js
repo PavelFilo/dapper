@@ -25,9 +25,11 @@ const createVehiclesObject = (depos) =>
 
 const createJobsObject = async (body) => {
   const points = await getPointsToClear(body)
+
   return points.features.map((point, index) => ({
     id: index + 1,
     location: point.geometry.coordinates,
+    priority: Math.min(Math.ceil(point.properties.score || 0), 100),
   }))
 }
 
@@ -39,7 +41,7 @@ const getRouting = async (input) => {
     options: { g: true },
   }
 
-  console.log(body.vehicles)
+  console.log(body.jobs)
 
   const request = await fetch('https://api.openrouteservice.org/optimization', {
     method: 'POST',
@@ -51,7 +53,7 @@ const getRouting = async (input) => {
   })
 
   const response = await request.json()
-  console.log('response', response)
+  // console.log('response', response)
   //   polyline.decode('cxl_cBqwvnS|Dy@ogFyxmAf`IsnA|CjFzCsHluD_k@hi@ljL', 6);
   return {
     ...response,
