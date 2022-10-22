@@ -90,7 +90,7 @@ export const Modifications = ({
                   disabled={!isValid || isSubmitting}
                   type="submit"
                 >
-                  GENERATE MAP
+                  GENERATE NEW MAP
                 </Button>
               </div>
             </Form>
