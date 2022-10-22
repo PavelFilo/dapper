@@ -39,7 +39,7 @@ export const CallAPI = async ({ body, endpoint }: IAPICallConfig) => {
       success = !error
     }
 
-    return { content: data, status, success } as IAPIResponse
+    return { content: obj, status, success } as IAPIResponse
   } catch (err: any) {
     return {
       content: err,

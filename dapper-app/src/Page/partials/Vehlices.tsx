@@ -3,7 +3,11 @@ import { generateRoutes } from '../../api/endpoints'
 import { Input } from '../../components/Input'
 import { Sidebar } from '../../components/Sidebar'
 
-export const Vehlices = () => {
+interface IVehiclesProps {
+  onFetchRoutes: (vehicleCount: number) => void
+}
+
+export const Vehlices = ({ onFetchRoutes }: IVehiclesProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [value, setValue] = useState(1)
   return (
@@ -33,14 +37,7 @@ export const Vehlices = () => {
           </div>
 
           <div className="flex items-start">
-            <button
-              onClick={async () => {
-                const res = await generateRoutes({ vehiclesCount: 3 })
-                console.log(res)
-              }}
-            >
-              GENERTE ROUTES
-            </button>
+            <button onClick={() => onFetchRoutes(value)}>GENERTE ROUTES</button>
           </div>
         </div>
       </Sidebar>
