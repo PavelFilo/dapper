@@ -1,4 +1,11 @@
-import { MapContainer, Marker, TileLayer, Popup, Polyline } from 'react-leaflet'
+import {
+  MapContainer,
+  Marker,
+  TileLayer,
+  Popup,
+  Polyline,
+  ZoomControl,
+} from 'react-leaflet'
 import { data } from './mock'
 
 const polyline = data.routes[0].geometry.map((step) => [
@@ -14,22 +21,18 @@ const limeOptions = { color: 'black' }
 export const Map = () => {
   return (
     <div id="map">
-      <MapContainer
-        center={[48.1628, 17.1785]}
-        zoom={13}
-        scrollWheelZoom={false}
-      >
+      <MapContainer center={[DEPO_LAT, DEPO_LON]} zoom={13} zoomControl={false}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <Marker position={[DEPO_LAT, DEPO_LON]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
+          <Popup>DEPO</Popup>
         </Marker>
 
         <Polyline pathOptions={limeOptions} positions={polyline as any} />
+
+        <ZoomControl position="bottomright" />
       </MapContainer>
     </div>
   )
