@@ -1,8 +1,11 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { generateMap, generateRoutes } from '../api/endpoints'
 import { SplashScreenLoader } from '../components/SplashScreenLoader'
 import { Map } from './partials/Map'
-import { Modifications } from './partials/Modifications'
+import {
+  IModificationFormValues,
+  Modifications,
+} from './partials/Modifications'
 import { IRoutesFormValues, Routes } from './partials/Routes'
 import { FormikHelpers } from 'formik'
 
@@ -10,24 +13,38 @@ export const Page = () => {
   const [routes, setRoutes] = useState()
   const [significantPoints, setSignificantPoints] = useState()
 
-  const onFetchRoutes = async (
-    { vehiclesCount }: IRoutesFormValues,
-    { setSubmitting }: FormikHelpers<IRoutesFormValues>
-  ) => {
-    setSubmitting(true)
-    const res = await generateRoutes({ vehiclesCount })
+  const onFetchRoutes = useCallback(
+    async (
+      { vehiclesCount }: IRoutesFormValues,
+      { setSubmitting }: FormikHelpers<IRoutesFormValues>
+    ) => {
+      setSubmitting(true)
+      const res = await generateRoutes({ vehiclesCount })
 
-    if (res.success) {
-      setRoutes(res?.content?.routes)
-      setSubmitting(false)
-    }
-  }
+      if (res.success) {
+        setRoutes(res?.content?.routes)
+        setSubmitting(false)
+      }
+    },
+    [generateRoutes]
+  )
 
-  const onFetchSignificantPoints = async (vehiclesCount: number) => {
-    const res = await generateMap({ vehiclesCount })
+  const onFetchSignificantPoints = useCallback(
+    async (
+      values: IModificationFormValues,
+      { setSubmitting }: FormikHelpers<IModificationFormValues>
+    ) => {
+      setSubmitting(true)
 
-    setSignificantPoints(res?.content?.routes)
-  }
+      const res = await generateMap()
+
+      if (res.success) {
+        setSignificantPoints(res?.content?.features)
+        setSubmitting(false)
+      }
+    },
+    [generateMap]
+  )
 
   return (
     <>

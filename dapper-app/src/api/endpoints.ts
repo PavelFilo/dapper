@@ -7,12 +7,12 @@ interface IGenerateRoutesInput {
   vehiclesCount: number
 }
 
-interface IGenerateMapInput {
-  /**
-   * Count of vehicles
-   **/
-  vehiclesCount: number
-}
+// interface IGenerateMapInput {
+//   /**
+//    * Count of vehicles
+//    **/
+//   vehiclesCount: number
+// }
 
 export const generateRoutes = async (body: IGenerateRoutesInput) => {
   return CallAPI({
@@ -20,9 +20,12 @@ export const generateRoutes = async (body: IGenerateRoutesInput) => {
     endpoint: 'generate-routes',
   })
 }
-export const generateMap = async (body: IGenerateMapInput) => {
+export const generateMap = async () => {
   return CallAPI({
-    body,
     endpoint: 'pregenerate-map',
+    body: {
+      weights: { class: 1, isTrolley: 1 },
+      preGenerateSourceMap: true,
+    },
   })
 }

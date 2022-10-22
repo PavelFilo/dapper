@@ -2,8 +2,9 @@
  * Configuration for the body
  */
 interface IAPICallConfig {
-  body: object
+  body?: object
   endpoint: string
+  method?: string
 }
 
 interface IAPIResponse {
@@ -19,20 +20,26 @@ interface IAPIResponse {
   status: number
 }
 
-export const CallAPI = async ({ body, endpoint }: IAPICallConfig) => {
+export const CallAPI = async ({
+  body,
+  method = 'POST',
+  endpoint,
+}: IAPICallConfig) => {
   try {
     const responseRaw: Response = await fetch(
       'http://localhost:3002/' + endpoint,
       {
-        body: JSON.stringify(body),
-        method: 'POST',
+        body: body ? JSON.stringify(body) : undefined,
+        method: method,
       }
     )
 
     const { status, ok } = responseRaw
     const obj = await responseRaw.json()
 
-    const { error, data } = obj
+    console.log(obj)
+
+    const { error } = obj
 
     let success = ok
     if ('undefined' !== typeof error) {

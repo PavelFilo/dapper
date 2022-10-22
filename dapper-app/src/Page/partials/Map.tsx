@@ -5,6 +5,7 @@ import {
   Popup,
   Polyline,
   ZoomControl,
+  Circle,
 } from 'react-leaflet'
 
 const DEPO_LAT = 48.161324
@@ -15,16 +16,19 @@ interface IRoute {
   cost: number
   distance: number
 }
+interface ISignificantPoint {
+  geometry: { coordinates: [number, number] }
+}
 
 interface IMapProps {
   routes?: IRoute[]
-  significantPoints?: IRoute[]
+  significantPoints?: ISignificantPoint[]
 }
 
 const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple']
 
-export const Map = ({ routes }: IMapProps) => {
-  console.log(routes)
+export const Map = ({ routes, significantPoints }: IMapProps) => {
+  console.log(significantPoints)
 
   return (
     <div id="map">
@@ -49,6 +53,15 @@ export const Map = ({ routes }: IMapProps) => {
             />
           )
         })}
+
+        {significantPoints?.map(({ geometry }, index) => (
+          <Circle
+            key={index}
+            center={[geometry.coordinates[1], geometry.coordinates[0]]}
+            pathOptions={{ fillColor: 'red' }}
+            radius={20}
+          />
+        ))}
 
         <ZoomControl position="bottomright" />
       </MapContainer>
