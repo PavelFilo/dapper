@@ -19,15 +19,14 @@ const loadSourceMap = () => ({
 
 const combinePointsMap = () => {}
 
-const getNPointsFromLine = (coordinates, n = 3) => [
-  coordinates[0],
-  coordinates[coordinates.length - 1],
+const getMiddlePoint = (coordinates) => [
+  coordinates[Math.floor(coordinates.length / 2)],
 ]
 
 const getPointsFromSignificantStreets = (streets) => ({
   type: 'FeatureCollection',
   features: streets.features.flatMap((street) =>
-    getNPointsFromLine(street.geometry.coordinates[0]).map((coords) => ({
+    getMiddlePoint(street.geometry.coordinates[0]).map((coords) => ({
       type: 'Feature',
       geometry: {
         type: 'Point',
@@ -43,7 +42,6 @@ const prepareSignificantPoints = (weights) => {
   map.features = map.features.filter(({ properties }) => properties.d_class > 1)
 
   const points = getPointsFromSignificantStreets(map)
-  console.log('her')
 
   return points
 }

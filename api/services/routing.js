@@ -30,10 +30,6 @@ const getRouting = async (numberOfVehicles) => {
     options: { g: true },
   }
 
-  console.log('jobs', jobs[0])
-
-  console.log('body', body)
-
   const request = await fetch('https://api.openrouteservice.org/optimization', {
     method: 'POST',
     headers: {
@@ -44,7 +40,7 @@ const getRouting = async (numberOfVehicles) => {
   })
 
   const response = await request.json()
-  console.log('response', response)
+
   //   polyline.decode('cxl_cBqwvnS|Dy@ogFyxmAf`IsnA|CjFzCsHluD_k@hi@ljL', 6);
   return {
     ...response,
