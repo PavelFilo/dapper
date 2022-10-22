@@ -1,18 +1,12 @@
 const { lineOverlap } = require('@turf/turf')
 const fs = require('fs')
-const { data: sourceMap } = require('../data/pasport')
 const { DEFAULT_WEIGHTS } = require('./constants')
-const { storeGeoJSON } = require('./helper')
+const { data: pasportData } = require('../data/pasport')
 
 const LAYER_PROPERTIES = {
   IS_TROLLEY: 'isTrolley',
+  CLASS: 'class',
 }
-
-// const getStreetClass = (value) => {
-//   if (value === 'I') return 1
-//   if (value === 'II') return 0.5
-//   return 0
-// }
 
 const loadSourceMap = () => {
   const rawStreets = fs.readFileSync('./data/cesty.geojson')
@@ -22,7 +16,7 @@ const loadSourceMap = () => {
 
 const combinePointsMap = () => {}
 
-const combineLinesMap = (sourceMap, targetMap, propertyName, value) => {
+const combineLinesMap = (sourceMap, targetMap, propertyName, valueFn) => {
   for (let i = 0; i < targetMap.features.length; i++) {
     const targetFeature = targetMap.features[i]
 
@@ -36,7 +30,7 @@ const combineLinesMap = (sourceMap, targetMap, propertyName, value) => {
       if (overlap.features.length > 0) {
         targetMap.features[i].properties = {
           ...targetMap.features[i].properties,
-          [propertyName]: value,
+          [propertyName]: valueFn(sourceFeature.properties),
         }
       }
     }
@@ -61,14 +55,32 @@ const getPointsFromSignificantStreets = (streets) => ({
 })
 
 const computeScore = (properties, weights) => {
-  return (properties?.[LAYER_PROPERTIES.IS_TROLLEY] || 0) * weights.isTrolley
+  let score = 0
+  Object.keys(LAYER_PROPERTIES).forEach(
+    (property) =>
+      (score +=
+        (properties?.[LAYER_PROPERTIES[property]] || 0) *
+        weights[LAYER_PROPERTIES[property]])
+  )
+  return score
 }
 
 const combineLayers = (map) => {
   const rawdata = fs.readFileSync('./data/trolejbus.geojson')
   const trolejbus = JSON.parse(rawdata)
 
-  combineLinesMap(trolejbus, map, LAYER_PROPERTIES.IS_TROLLEY, 1)
+  combineLinesMap(trolejbus, map, LAYER_PROPERTIES.IS_TROLLEY, () => true)
+
+  combineLinesMap(
+    pasportData,
+    map,
+    LAYER_PROPERTIES.CLASS,
+    ({ Trieda_komunikacie }) => {
+      if (Trieda_komunikacie === 'I') return 1
+      if (Trieda_komunikacie === 'II') return 0.5
+      return 0
+    }
+  )
 }
 
 const loadFinalMap = () => {
@@ -91,7 +103,11 @@ const generateAndStoreSourceMap = () => {
   return map
 }
 
-const prepareSignificantPoints = ({ weights, preGenerateSourceMap }) => {
+const prepareSignificantPoints = ({
+  weights,
+  preGenerateSourceMap,
+  threshold,
+}) => {
   const finalWeights = { ...DEFAULT_WEIGHTS, ...weights }
   console.log('finalWeights', finalWeights)
 
@@ -100,7 +116,8 @@ const prepareSignificantPoints = ({ weights, preGenerateSourceMap }) => {
     : loadFinalMap()
 
   map.features = map.features.filter(
-    ({ properties }) => computeScore(properties, finalWeights) > 1
+    ({ properties }) =>
+      computeScore(properties, finalWeights) > (threshold || 1)
   )
 
   const points = getPointsFromSignificantStreets(map)

@@ -1,5 +1,5 @@
-const DEPO_LAT = 48.161324
-const DEPO_LON = 17.14068
+const DEPO_LAT = 48.152778
+const DEPO_LON = 17.127123
 
 const MIN_SNOW_VALUE = 0.000001
 

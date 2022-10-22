@@ -6,7 +6,7 @@ const { loadWeatherForecast } = require('./weather')
 const { storeGeoJSON } = require('./helper')
 const { prepareSignificantPoints } = require('./significantPointsGenerator')
 
-const generateTinForWeather = (weatherData) => {
+const generateTinForWeather = (weatherData, minSnowValue) => {
   const dataToProcess = {
     type: 'FeatureCollection',
     features: weatherData[weatherData.length - 1].points.map(
@@ -31,16 +31,16 @@ const generateTinForWeather = (weatherData) => {
       (polygon) =>
         (polygon.properties.a + polygon.properties.b + polygon.properties.c) /
           3 >
-        MIN_SNOW_VALUE
+        (minSnowValue || MIN_SNOW_VALUE)
     ),
   }
 }
 
-const getPointsToClear = async () => {
+const getPointsToClear = async (body) => {
   const weatherData = await loadWeatherForecast()
 
   const significantPoints = loadSignificantPointsFromFile()
-  const tinMap = generateTinForWeather(weatherData)
+  const tinMap = generateTinForWeather(weatherData, body.minSnowValue)
 
   const pointsToClear = pointsWithinPolygon(significantPoints, tinMap)
 

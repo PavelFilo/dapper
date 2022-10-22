@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 app.post('/generate-routes', async (req, res) => {
   try {
     console.log('req', req.body)
-    const routes = await getRouting(req.body.vehiclesCount || 1)
+    const routes = await getRouting(req.body)
     res.send(routes)
   } catch (error) {
     console.error(error)
@@ -26,8 +26,13 @@ app.post('/generate-routes', async (req, res) => {
 })
 
 app.post('/pregenerate-map', (req, res) => {
-  const points = generateSignificantPoints(req.body)
-  res.send(points)
+  try {
+    const points = generateSignificantPoints(req.body)
+    res.send(points)
+  } catch (error) {
+    console.error(error)
+    res.send(error)
+  }
 })
 
 app.get('/weather-forecast', async (req, res) => {

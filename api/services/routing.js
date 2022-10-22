@@ -14,21 +14,23 @@ const createVehiclesObject = (numberOfVehicles) =>
       end: [DEPO_LON, DEPO_LAT],
     }))
 
-const createJobsObject = async () => {
-  const points = await getPointsToClear()
+const createJobsObject = async (body) => {
+  const points = await getPointsToClear(body)
   return points.features.map((point, index) => ({
     id: index + 1,
     location: point.geometry.coordinates,
   }))
 }
 
-const getRouting = async (numberOfVehicles) => {
-  const jobs = await createJobsObject()
+const getRouting = async (input) => {
+  const jobs = await createJobsObject(input)
   const body = {
-    jobs: jobs.slice(0, 60),
-    vehicles: createVehiclesObject(numberOfVehicles),
+    jobs: jobs.slice(0, 40),
+    vehicles: createVehiclesObject(input.vehiclesCount || 1),
     options: { g: true },
   }
+
+  console.log(body)
 
   const request = await fetch('https://api.openrouteservice.org/optimization', {
     method: 'POST',
