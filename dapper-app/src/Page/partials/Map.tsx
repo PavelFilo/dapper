@@ -7,6 +7,8 @@ import {
   ZoomControl,
   Circle,
 } from 'react-leaflet'
+import { icon } from 'leaflet'
+import image from '../../assets/team-locations-marker-not-selected.png'
 
 const DEPO_LAT = 48.152778
 const DEPO_LON = 17.127123
@@ -19,7 +21,10 @@ export interface IRoute {
   vehicle: number
 }
 interface ISignificantPoint {
-  geometry: { coordinates: [number, number] }
+  geometry: {
+    coordinates: [number, number]
+  }
+  properties: { isTrolley?: boolean; isCriticalPT?: boolean; class: number }
 }
 
 interface IMapProps {
@@ -27,10 +32,21 @@ interface IMapProps {
   significantPoints?: ISignificantPoint[]
 }
 
-const colors = ['#FFABAB', '#87B37A', '#AF9164', '#4281A4', 'orange', 'purple']
+export const colors = [
+  '#FFABAB',
+  '#87B37A',
+  '#AF9164',
+  '#4281A4',
+  'orange',
+  'purple',
+]
 
 export const Map = ({ routes, significantPoints }: IMapProps) => {
-  console.log(significantPoints)
+  const markerIcon = icon({
+    iconUrl: image,
+    iconSize: [25.5, 32.58],
+    iconAnchor: [12.75, 32.58],
+  })
 
   return (
     <div id="map">
@@ -39,21 +55,39 @@ export const Map = ({ routes, significantPoints }: IMapProps) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
         />
-        <Marker position={[DEPO_LAT, DEPO_LON]}>
+        <Marker icon={markerIcon} position={[DEPO_LAT, DEPO_LON]}>
           <Popup>DEPO</Popup>
         </Marker>
 
-        {significantPoints?.map(({ geometry }, index) => (
-          <Circle
-            key={index}
-            center={[geometry.coordinates[1], geometry.coordinates[0]]}
-            pathOptions={{
-              fillColor: '#E7FFAC',
-              color: '#E7FFAC',
-            }}
-            radius={20}
-          />
-        ))}
+        {significantPoints?.map(({ geometry, properties }, index) => {
+          const propertiesArray = [
+            properties?.isTrolley ? 'Trolley line' : undefined,
+            properties?.isCriticalPT ? 'Critical public transport' : undefined,
+            properties?.class === 1
+              ? 'Class 1'
+              : properties?.class === 0.5
+              ? 'Class 2'
+              : undefined,
+          ].filter(Boolean)
+
+          return (
+            <Circle
+              key={index}
+              center={[geometry.coordinates[1], geometry.coordinates[0]]}
+              pathOptions={{
+                fillColor: '#E7FFAC',
+                color: '#E7FFAC',
+              }}
+              radius={20}
+            >
+              {!!propertiesArray.length && (
+                <Popup>
+                  <div>{propertiesArray.join(', ')}</div>
+                </Popup>
+              )}
+            </Circle>
+          )
+        })}
 
         {routes?.map((route, index) => {
           return (
