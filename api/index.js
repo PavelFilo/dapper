@@ -26,8 +26,8 @@ app.post('/generate-routes', async (req, res) => {
 })
 
 app.post('/pregenerate-map', (req, res) => {
-  generateSignificantPoints()
-  res.send(true)
+  const points = generateSignificantPoints()
+  res.send(points)
 })
 
 app.get('/weather-forecast', async (req, res) => {
