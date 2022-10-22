@@ -6,6 +6,7 @@ import Specifition from '../../assets/form-24-regular.svg'
 import Close from '../../assets/close-big.svg'
 
 import * as Yup from 'yup'
+import { Button } from '../../components/Button'
 
 interface IModificationsProps {
   onFetchSignificantPoints: (
@@ -51,9 +52,12 @@ export const Modifications = ({
           {({ isValid, isSubmitting }) => (
             <Form className="h-full flex flex-col">
               <div className="flex items-end justify-end pb-3 bg-dark">
-              <button className=' p-1 rounded-3xl bg-dark ' onClick={() => setIsOpen(false)}>
-             <img className="close" src={Close} alt="" />
-            </button>
+                <button
+                  className=" p-1 rounded-3xl bg-dark "
+                  onClick={() => setIsOpen(false)}
+                >
+                  <img className="close" src={Close} alt="" />
+                </button>
               </div>
               <div className="gap-2 flex-1 flex-col flex items-start">
                 <Field name="class">
@@ -78,13 +82,13 @@ export const Modifications = ({
               </div>
 
               <div className="flex items-center justify-center pb-5">
-                <button
-                  className="bg-success font-extrabold"
+                <Button
+                  loading={isSubmitting}
                   disabled={!isValid || isSubmitting}
                   type="submit"
                 >
                   GENERATE MAP
-                </button>
+                </Button>
               </div>
             </Form>
           )}

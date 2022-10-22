@@ -5,8 +5,9 @@ import * as Yup from 'yup'
 import { Form, Formik, FormikHelpers, Field } from 'formik'
 import { IRoute } from './Map'
 import { VehiclesTable } from './VehiclesTable'
-import Vehicle from '../../assets/car-filled.svg';
-import Close from '../../assets/close-big.svg';
+import Vehicle from '../../assets/car-filled.svg'
+import Close from '../../assets/close-big.svg'
+import { Button } from '../../components/Button'
 
 export type TRouteData = { routes: IRoute[]; summary: any } | undefined
 
@@ -35,12 +36,11 @@ export const Routes = ({
 
   return (
     <>
-       <button
+      <button
         className="z-400 absolute right-4 top-5 p-2 rounded-3xl bg-dark"
         onClick={() => setIsOpen(true)}
       >
-        <img className='vehicle ' src={Vehicle} alt="" />        
-
+        <img className="vehicle " src={Vehicle} alt="" />
       </button>
 
       <Sidebar className="px-4 py-5" isOpen={isOpen} side="right">
@@ -54,13 +54,15 @@ export const Routes = ({
           {({ isValid, isSubmitting }) => (
             <Form className="h-full flex flex-col">
               <div className="gap-2 flex-1 flex-col flex items-start">
-              <div className='flex items-start justify-start pb-3'>
-            <button className=' p-1 rounded-3xl bg-dark ' onClick={() => setIsOpen(false)}>
-             <img className="close" src={Close} alt="" />
-            </button>
-            </div>
-                <div className="flex w-full justify-end">
+                <div className="flex items-start justify-start pb-3">
+                  <button
+                    className=" p-1 rounded-3xl bg-dark "
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <img className="close" src={Close} alt="" />
+                  </button>
                 </div>
+                <div className="flex w-full justify-end"></div>
 
                 <Field name="vehiclesCount">
                   {({ field }: any) => (
@@ -76,13 +78,13 @@ export const Routes = ({
               </div>
 
               <div className="flex items-center justify-center pb-5">
-                <button
-                className='bg-success font-extrabold'
+                <Button
+                  loading={isSubmitting}
                   disabled={!hasSignificantPoints || !isValid || isSubmitting}
                   type="submit"
                 >
                   GENERATE ROUTES
-                </button>
+                </Button>
               </div>
             </Form>
           )}
