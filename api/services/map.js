@@ -4,6 +4,7 @@ const { MIN_SNOW_VALUE, SIGNIFICANT_POINTS_PATH } = require('./constants')
 const { SIGNIFICANT_POINTS } = require('./mock')
 const { loadWeatherForecast } = require('./weather')
 const { storeGeoJSON } = require('./helper')
+const { prepareSignificantPoints } = require('./significantPointsGenerator')
 
 const generateTinForWeather = (weatherData) => {
   const dataToProcess = {
@@ -56,9 +57,11 @@ const loadSignificantPointsFromFile = () => {
   return points
 }
 
-const generateSignificantPoints = () => {
+const generateSignificantPoints = (weights) => {
   //TODO: finish this
-  fs.writeFileSync(SIGNIFICANT_POINTS_PATH, JSON.stringify(SIGNIFICANT_POINTS))
+  const significantPoints = prepareSignificantPoints(weights)
+  fs.writeFileSync(SIGNIFICANT_POINTS_PATH, JSON.stringify(significantPoints))
+  // JSON.stringify(SIGNIFICANT_POINTS))
 }
 
 module.exports = {
