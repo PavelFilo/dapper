@@ -1,15 +1,8 @@
 const { lineOverlap, collect, pointsWithinPolygon } = require('@turf/turf')
 const fs = require('fs')
-const { DEFAULT_WEIGHTS } = require('./constants')
+const { DEFAULT_WEIGHTS, LAYER_PROPERTIES } = require('./constants')
 const { data: pasportData } = require('../data/pasport')
 const { average } = require('./helper')
-
-const LAYER_PROPERTIES = {
-  IS_TROLLEY: 'isTrolley',
-  CLASS: 'class',
-  IS_CRITICAL_PT: 'isCriticalPT',
-  IS_SCHOOL_NEARBY: 'isSchoolNearby',
-}
 
 const tileHasData = (properties) =>
   Object.keys(properties).reduce((a, c) => a + (properties[c] || 0), 0) > 0
@@ -30,14 +23,52 @@ const loadJsonFromFile = (path) => {
   return JSON.parse(raw)
 }
 
-const combinePointsMap = (targetMap) => {
-  const grid = loadJsonFromFile('./data/grid.geojson')
-
+const loadSchoolData = (grid) => {
   const schools = loadJsonFromFile('./data/schools.geojson')
 
   const sourceProperty = 'school'
   const targetProperty = 'schoolsCount'
 
+  return collectData(grid, schools, sourceProperty, targetProperty)
+}
+
+const loadHospitalData = (grid) => {
+  const schools = loadJsonFromFile('./data/hospitals.geojson')
+
+  const sourceProperty = 'hospital'
+  const targetProperty = 'hospitalsCount'
+
+  return collectData(grid, schools, sourceProperty, targetProperty)
+}
+
+const loadPoliceData = (grid) => {
+  const schools = loadJsonFromFile('./data/police.geojson')
+
+  const sourceProperty = 'police'
+  const targetProperty = 'policeCount'
+
+  return collectData(grid, schools, sourceProperty, targetProperty)
+}
+
+const loadFireDepData = (grid) => {
+  const schools = loadJsonFromFile('./data/fireDepartments.geojson')
+
+  const sourceProperty = 'fire'
+  const targetProperty = 'fireCount'
+
+  return collectData(grid, schools, sourceProperty, targetProperty)
+}
+
+const loadUniversityData = (grid) => {
+  const schools = loadJsonFromFile('./data/highSchools.geojson')
+
+  const sourceProperty = 'highSchool'
+  const targetProperty = 'highSchoolCount'
+
+  return collectData(grid, schools, sourceProperty, targetProperty)
+}
+
+const collectData = (grid, schools, sourceProperty, targetProperty) => {
   const collected = collect(grid, schools, sourceProperty, targetProperty)
   collected.features = collected.features.map((feature) => ({
     ...feature,
@@ -46,6 +77,18 @@ const combinePointsMap = (targetMap) => {
       [targetProperty]: average(feature.properties[targetProperty]),
     },
   }))
+
+  return collected
+}
+
+const combinePointsMap = (targetMap) => {
+  const grid = loadJsonFromFile('./data/grid.geojson')
+
+  let collected = loadSchoolData(grid)
+  collected = loadHospitalData(collected)
+  collected = loadPoliceData(collected)
+  collected = loadFireDepData(collected)
+  collected = loadUniversityData(collected)
 
   const streetPoints = {
     type: 'FeatureCollection',
@@ -72,7 +115,12 @@ const combinePointsMap = (targetMap) => {
 
         targetMap.features[feature.properties.streetIndex].properties = {
           ...targetMap.features[feature.properties.streetIndex].properties,
-          hasSchool: tile.properties.schoolsCount,
+          [LAYER_PROPERTIES.IS_SCHOOL_NEARBY]: tile.properties.schoolsCount,
+          [LAYER_PROPERTIES.IS_HOSPITAL_NEARBY]: tile.properties.hospitalsCount,
+          [LAYER_PROPERTIES.IS_POLICE_NEARBY]: tile.properties.policeCount,
+          [LAYER_PROPERTIES.IS_FIRE_DEP_NEARBY]: tile.properties.fireCount,
+          [LAYER_PROPERTIES.IS_UNIVERSITY_NEARBY]:
+            tile.properties.highSchoolCount,
         }
       }
     }
@@ -194,6 +242,7 @@ const prepareSignificantPoints = ({
       },
     }))
     .filter(({ properties }) => properties.score > (threshold || 1))
+    .sort((a, b) => b.properties.score - a.properties.score)
 
   const points = getPointsFromSignificantStreets(map)
 

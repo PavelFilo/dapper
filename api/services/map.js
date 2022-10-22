@@ -1,6 +1,10 @@
 const fs = require('fs')
 const { tin, pointsWithinPolygon } = require('@turf/turf')
-const { MIN_SNOW_VALUE, SIGNIFICANT_POINTS_PATH } = require('./constants')
+const {
+  MIN_SNOW_VALUE,
+  SIGNIFICANT_POINTS_PATH,
+  AMOUNT_OF_POINTS,
+} = require('./constants')
 const { SIGNIFICANT_POINTS } = require('./mock')
 const { loadWeatherForecast } = require('./weather')
 const { storeGeoJSON } = require('./helper')
@@ -54,11 +58,18 @@ const loadSignificantPointsFromFile = () => {
   return points
 }
 
-const generateSignificantPoints = (body) => {
-  //TODO: finish this
+const generateSignificantPoints = async (body) => {
   const significantPoints = prepareSignificantPoints(body)
   fs.writeFileSync(SIGNIFICANT_POINTS_PATH, JSON.stringify(significantPoints))
-  return significantPoints
+
+  const weatherData = await loadWeatherForecast()
+  const tinMap = generateTinForWeather(weatherData, body.minSnowValue)
+  const pointsToClear = pointsWithinPolygon(significantPoints, tinMap)
+
+  return {
+    ...pointsToClear,
+    features: pointsToClear.features.slice(0, AMOUNT_OF_POINTS),
+  }
   // JSON.stringify(SIGNIFICANT_POINTS))
 }
 

@@ -25,9 +25,9 @@ app.post('/generate-routes', async (req, res) => {
   }
 })
 
-app.post('/pregenerate-map', (req, res) => {
+app.post('/pregenerate-map', async (req, res) => {
   try {
-    const points = generateSignificantPoints(req.body)
+    const points = await generateSignificantPoints(req.body)
     res.send(points)
   } catch (error) {
     console.error(error)
