@@ -18,6 +18,7 @@ interface IRoute {
 
 interface IMapProps {
   routes?: IRoute[]
+  significantPoints?: IRoute[]
 }
 
 const colors = ['red', 'blue', 'green', 'yellow', 'orange', 'purple']
