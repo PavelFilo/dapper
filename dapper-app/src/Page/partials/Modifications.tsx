@@ -58,20 +58,16 @@ export const Modifications = ({
         >
           {({ isValid, isSubmitting }) => (
             <Form className="h-full flex flex-col">
-              <div className="flex ">
-                <div className="items-start justify-start  pb-3">
-                  <img className="h-20 w-20" src={Logo} alt="" />
-                </div>
+              <div className="flex pb-4 items-center justify-between">
+                <img className="w-24" src={Logo} alt="" />
 
-                <div className=" items-end justify-end float-right pl-44">
-                  <button
-                    type="button"
-                    className=" p-1 rounded-3xl "
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <img className="close" src={Close} alt="" />
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  className=" p-1 rounded-3xl "
+                  onClick={() => setIsOpen(false)}
+                >
+                  <img className="close" src={Close} alt="" />
+                </button>
               </div>
 
               <div className="gap-2 flex-1 flex-col flex items-start">
