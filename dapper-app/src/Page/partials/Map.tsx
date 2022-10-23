@@ -24,7 +24,16 @@ interface ISignificantPoint {
   geometry: {
     coordinates: [number, number]
   }
-  properties: { isTrolley?: boolean; isCriticalPT?: boolean; class: number }
+  properties: {
+    isTrolley?: boolean
+    isCriticalPT?: boolean
+    class: number
+    isSchoolNearby?: boolean
+    isHospitalNearby?: boolean
+    isPoliceNearby?: boolean
+    isFireDepNearby?: boolean
+    isUniversityNearby?: boolean
+  }
 }
 
 interface IWeather {
@@ -88,6 +97,10 @@ export const Map = ({ routes, significantPoints, weather }: IMapProps) => {
           const propertiesArray = [
             properties?.isTrolley ? 'Trolley line' : undefined,
             properties?.isCriticalPT ? 'Critical public transport' : undefined,
+            properties?.isSchoolNearby ? 'Elementary school' : undefined,
+            properties?.isHospitalNearby ? 'Hospital' : undefined,
+            properties?.isPoliceNearby ? 'Police' : undefined,
+            properties?.isFireDepNearby ? 'Fire department' : undefined,
             properties?.class === 1
               ? 'Class 1'
               : properties?.class === 0.5
