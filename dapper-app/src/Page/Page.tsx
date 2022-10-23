@@ -42,7 +42,7 @@ export const Page = () => {
       setSubmitting(true)
 
       const res = await generateMap({
-        weights: { class: values.class, isTrolley: values.isTrolley },
+        weights: values,
         threshold: 1,
       })
 

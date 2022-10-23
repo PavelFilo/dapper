@@ -20,6 +20,11 @@ const modificationValidationSchema = Yup.object().shape({
   class: Yup.number().required().min(0),
   isTrolley: Yup.number().required().min(0),
   isCriticalPT: Yup.number().required().min(0),
+  isSchoolNearby: Yup.number().required().min(0),
+  isHospitalNearby: Yup.number().required().min(0),
+  isPoliceNearby: Yup.number().required().min(0),
+  isFireDepNearby: Yup.number().required().min(0),
+  isUniversityNearby: Yup.number().required().min(0),
 })
 
 export type IModificationFormValues = Yup.InferType<
@@ -53,6 +58,11 @@ export const Modifications = ({
             class: 1,
             isTrolley: 1,
             isCriticalPT: 1,
+            isSchoolNearby: 1,
+            isHospitalNearby: 1,
+            isPoliceNearby: 1,
+            isFireDepNearby: 1,
+            isUniversityNearby: 1,
           })}
           onSubmit={onFetchSignificantPoints}
         >
@@ -86,6 +96,43 @@ export const Modifications = ({
                     <Input
                       type="number"
                       label="Critical public transport"
+                      {...field}
+                    />
+                  )}
+                </Field>
+                <Field name="isSchoolNearby">
+                  {({ field }: any) => (
+                    <Input
+                      type="number"
+                      label="Elementary school nearby"
+                      {...field}
+                    />
+                  )}
+                </Field>
+                <Field name="isHospitalNearby">
+                  {({ field }: any) => (
+                    <Input type="number" label="Hospital nearby" {...field} />
+                  )}
+                </Field>
+                <Field name="isPoliceNearby">
+                  {({ field }: any) => (
+                    <Input type="number" label="Police nearby" {...field} />
+                  )}
+                </Field>
+                <Field name="isFireDepNearby">
+                  {({ field }: any) => (
+                    <Input
+                      type="number"
+                      label="Fire department nearby"
+                      {...field}
+                    />
+                  )}
+                </Field>
+                <Field name="isUniversityNearby">
+                  {({ field }: any) => (
+                    <Input
+                      type="number"
+                      label="High school nearby"
                       {...field}
                     />
                   )}
