@@ -1,7 +1,12 @@
 {
     "type": "FeatureCollection",
-    "name": "hospitals",
+    "name": "fireDepartments",
     "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
     "features": [
-        { "type": "Feature", "properties": { "fire": 3 }, "geometry": { "type": "Point", "coordinates": [17.0660808, 48.1756862 ] } },
-        { "type": "Feature", "properties": { "fire": 3 }, "geometry": { "type": "Point", "coordinates": [17.0860145, 48.1466947 ] } } ]}
+    { "type": "Feature", "properties": { "fire": 1 }, "geometry": { "type": "Point", "coordinates": [17.098654, 48.113142 ] } },
+{ "type": "Feature", "properties": { "fire": 1 }, "geometry": { "type": "Point", "coordinates": [17.114723, 48.150234 ] } },
+{ "type": "Feature", "properties": { "fire": 1 }, "geometry": { "type": "Point", "coordinates": [17.133445, 48.171824 ] } },
+{ "type": "Feature", "properties": { "fire": 1 }, "geometry": { "type": "Point", "coordinates": [17.172712, 48.149846 ] } },
+{ "type": "Feature", "properties": { "fire": 1 }, "geometry": { "type": "Point", "coordinates": [17.031743, 48.200446 ] } }
+    
+    ]}
