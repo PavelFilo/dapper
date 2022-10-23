@@ -24,7 +24,7 @@ const modificationValidationSchema = Yup.object().shape({
   isHospitalNearby: Yup.number().required().min(0),
   isPoliceNearby: Yup.number().required().min(0),
   isFireDepNearby: Yup.number().required().min(0),
-  isUniversityNearby: Yup.number().required().min(0),
+  // isUniversityNearby: Yup.number().required().min(0),
 })
 
 export type IModificationFormValues = Yup.InferType<
@@ -128,15 +128,15 @@ export const Modifications = ({
                     />
                   )}
                 </Field>
-                <Field name="isUniversityNearby">
+                {/* <Field name="isUniversityNearby">
                   {({ field }: any) => (
                     <Input
                       type="number"
                       label="High school nearby"
                       {...field}
                     />
-                  )}
-                </Field>
+                  )} */}
+                {/* </Field> */}
               </div>
 
               <div className="flex items-center justify-center pb-5">
