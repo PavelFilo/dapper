@@ -16,7 +16,6 @@ app.get('/', (req, res) => {
 
 app.post('/generate-routes', async (req, res) => {
   try {
-    console.log('req', req.body)
     const routes = await getRouting(req.body)
     res.send(routes)
   } catch (error) {

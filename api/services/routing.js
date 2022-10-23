@@ -41,7 +41,6 @@ const getRouting = async (input) => {
     options: { g: true },
   }
 
-  console.log(body.jobs)
 
   const request = await fetch('https://api.openrouteservice.org/optimization', {
     method: 'POST',
