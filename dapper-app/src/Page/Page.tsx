@@ -8,7 +8,7 @@ import {
 } from './partials/Modifications'
 import { IRoutesFormValues, Routes } from './partials/Routes'
 import { FormikHelpers } from 'formik'
-import Specifition from '../assets/form-24-regular.svg'
+import Specifition from '../assets/weather-cloudy.svg'
 
 export const Page = () => {
   const [routeData, setRouteData] = useState<
@@ -90,7 +90,7 @@ export const Page = () => {
               onFetchWeather()
             }}
           >
-            <img className="specifition" src={Specifition} alt="" />
+            <img className="icon" src={Specifition} alt="" />
           </button>
         </div>
       )}

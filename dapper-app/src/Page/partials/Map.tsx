@@ -11,9 +11,7 @@ import { icon } from 'leaflet'
 import 'leaflet.heat'
 import image from '../../assets/team-locations-marker-not-selected.png'
 import { useEffect, useRef, useState } from 'react'
-
-const DEPO_LAT = 48.152778
-const DEPO_LON = 17.127123
+import { DEPO_LAT, DEPO_LON } from '../../constants'
 
 export interface IRoute {
   geometry: [number, number][]

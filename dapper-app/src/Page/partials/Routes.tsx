@@ -41,7 +41,7 @@ export const Routes = ({
           className="z-400 absolute right-4 top-5 p-2 rounded-3xl bg-dark"
           onClick={() => setIsOpen(true)}
         >
-          <img className="vehicle " src={Vehicle} alt="" />
+          <img className="buttonIcon " src={Vehicle} alt="routes button icon" />
         </button>
       )}
 

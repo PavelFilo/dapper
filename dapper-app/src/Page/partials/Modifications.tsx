@@ -38,7 +38,11 @@ export const Modifications = ({
         }`}
         onClick={() => setIsOpen(true)}
       >
-        <img className="specifition" src={Specifition} alt="" />
+        <img
+          className="buttonIcon"
+          src={Specifition}
+          alt="modifications button icon"
+        />
       </button>
 
       <Sidebar className="px-4 py-5" isOpen={isOpen} side="left">
