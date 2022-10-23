@@ -8,7 +8,9 @@ import {
   Circle,
 } from 'react-leaflet'
 import { icon } from 'leaflet'
+import 'leaflet.heat'
 import image from '../../assets/team-locations-marker-not-selected.png'
+import { useEffect, useRef, useState } from 'react'
 
 const DEPO_LAT = 48.152778
 const DEPO_LON = 17.127123
@@ -27,8 +29,13 @@ interface ISignificantPoint {
   properties: { isTrolley?: boolean; isCriticalPT?: boolean; class: number }
 }
 
+interface IWeather {
+  points: { lat: number; lon: number; value: number }[]
+}
+
 interface IMapProps {
   routes?: IRoute[]
+  weather?: IWeather
   significantPoints?: ISignificantPoint[]
 }
 
@@ -41,16 +48,36 @@ export const colors = [
   'purple',
 ]
 
-export const Map = ({ routes, significantPoints }: IMapProps) => {
+export const Map = ({ routes, significantPoints, weather }: IMapProps) => {
+  const [map, setMap] = useState(null)
+
   const markerIcon = icon({
     iconUrl: image,
     iconSize: [25.5, 32.58],
     iconAnchor: [12.75, 32.58],
   })
 
+  useEffect(() => {
+    const points = weather
+      ? weather.points?.map(({ lat, lon, value }) => {
+          return [lat, lon, value]
+        })
+      : []
+
+    if (points.length) {
+      // @ts-ignore
+      L?.heatLayer(points)?.addTo(map)
+    }
+  }, [weather])
+
   return (
     <div id="map">
-      <MapContainer center={[DEPO_LAT, DEPO_LON]} zoom={13} zoomControl={false}>
+      <MapContainer
+        ref={setMap}
+        center={[DEPO_LAT, DEPO_LON]}
+        zoom={13}
+        zoomControl={false}
+      >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"

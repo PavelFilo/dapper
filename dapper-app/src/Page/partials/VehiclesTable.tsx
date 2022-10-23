@@ -39,7 +39,7 @@ export const VehiclesTable = ({ routeData }: IVehiclesTableProps) => {
               {(2 * routeData?.summary?.distance) / 1000} km
             </p>
             <p className="flex">
-              <span className="flex-1 font-semibold"> <strong>Duration</strong> :</span>{' '}
+              <span className="flex-1 font-semibold">Duration :</span>{' '}
               {((2 * routeData?.summary?.duration) / 60).toFixed(2)} min
             </p>
           </div>
