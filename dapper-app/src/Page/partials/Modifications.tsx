@@ -4,6 +4,7 @@ import { Sidebar } from '../../components/Sidebar'
 import { Form, Formik, FormikHelpers, Field } from 'formik'
 import Specifition from '../../assets/form-24-regular.svg'
 import Close from '../../assets/close-big.svg'
+import Logo from '../../assets/dapper-text-logo.png'
 
 import * as Yup from 'yup'
 import { Button } from '../../components/Button'
@@ -57,7 +58,9 @@ export const Modifications = ({
         >
           {({ isValid, isSubmitting }) => (
             <Form className="h-full flex flex-col">
-              <div className="flex items-end justify-end pb-3">
+              <div className="flex pb-4 items-center justify-between">
+                <img className="w-24" src={Logo} alt="" />
+
                 <button
                   type="button"
                   className=" p-1 rounded-3xl "
@@ -66,6 +69,7 @@ export const Modifications = ({
                   <img className="close" src={Close} alt="" />
                 </button>
               </div>
+
               <div className="gap-2 flex-1 flex-col flex items-start">
                 <Field name="class">
                   {({ field }: any) => (
