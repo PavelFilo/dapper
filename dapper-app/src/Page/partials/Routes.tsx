@@ -72,6 +72,7 @@ export const Routes = ({
                     <Input
                       type="number"
                       label="Number of vehicles"
+                      placeholder="Enter a number"
                       {...field}
                     />
                   )}
