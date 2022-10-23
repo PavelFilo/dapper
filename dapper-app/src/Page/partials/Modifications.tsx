@@ -4,7 +4,7 @@ import { Sidebar } from '../../components/Sidebar'
 import { Form, Formik, FormikHelpers, Field } from 'formik'
 import Specifition from '../../assets/form-24-regular.svg'
 import Close from '../../assets/close-big.svg'
-import Logo from '../../assets/dapperr.png'
+import Logo from '../../assets/dapper-text-logo.png'
 
 import * as Yup from 'yup'
 import { Button } from '../../components/Button'
