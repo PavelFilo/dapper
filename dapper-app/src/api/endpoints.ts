@@ -1,3 +1,4 @@
+import { DEPO_LAT, DEPO_LON } from '../constants'
 import { CallAPI } from './utils'
 
 interface IGenerateRoutesInput {
@@ -16,9 +17,11 @@ interface IGenerateMapInput {
   preGenerateSourceMap?: boolean
 }
 
-export const generateRoutes = async (body: IGenerateRoutesInput) => {
+export const generateRoutes = async (input: IGenerateRoutesInput) => {
   return CallAPI({
-    body,
+    body: {
+      depos: [{ lat: DEPO_LAT, lon: DEPO_LON, count: input.vehiclesCount }],
+    },
     endpoint: 'generate-routes',
   })
 }
